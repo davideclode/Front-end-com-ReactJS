@@ -23,6 +23,7 @@
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.10.3",
     "webpack-dev-server": "^3.11.0"
   },
   "author": "Davide da Silva <silvada1@hotmail.com>",

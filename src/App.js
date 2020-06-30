@@ -32,22 +32,36 @@ function App() {
     useEffect( () => {
         // Quando api.get('projects') retornar uma resposta "então" teremos resposta disponível dentro de "response"
         api.get('projects').then(response => {
-            // Vou usar o 'data' para preencher o projeto. Temos que inicializar também nosso projeto com array vazio, ou seja "useState([])"
+            // Vou usar o 'data' para preencher o projeto. Temos que inicializar também nosso projeto com array vazio, ou seja "useState([])". Vale dizer que dentro do "response.data", temos "id", "title" e "owner"
             setProjects(response.data);
-            console.log(response);
+            // console.log(response);
         } )
     }, [] );
 
     // Função para lidar com a adição de novos projetos sem duplicá-las
-    function handleAddProject() {
+    //Acrescentamos "async" no final agora.
+    async function handleAddProject() {
         // Para javascript comum, usuariamos "projects.push('Novo Projeto)" mas iss criaria projetos duplicados
         // projects.push(`Novo projeto ${Date.now()}`);
 
-/*      Tota vez que a gente quer alterar o valor de "projects" precisamos chamar a função "setProjects". Então é essa função que devemos chamar. E para isso também vamos utilizar o conceito de IMUTABILIDADE. 
+/*      Tota vez que a gente quer alterar o valor de "projects" precisamos chamar a função             "setProjects". Então é essa função que devemos chamar. E para isso também vamos utilizar o conceito de IMUTABILIDADE. 
 '[]' significa que estamos criando um novo array
 '...projects' copiando tudo que já está dentro de projects
+`Novo projeto ${Date.now()}` e criando um novo projeto
 */
-        setProjects( [...projects, `Novo projeto ${Date.now()}`] );
+        // setProjects( [...projects, `Novo projeto ${Date.now()}`] );
+
+        // Lembrando que no "insomnia" enviamos uma requisição do tipo "POST" para rota "projects", enviando "title" e "owner". Portanto, aqui vamos utilizar a nossa "api" para enviar uma requisição do tipo "POST" para rota "projects", enviando "title" e "owner"
+        // 
+        const response = await api.post('projects', {
+            title: `Novo projeto ${Date.now()}`,
+            owner: "Davide da Silva"
+        } );
+        // Assim como no "response.data" do "api.get()" também temos dentro do "response.data" do "api.post()" o "id", "title" e "owner". Portanto fazemos:
+        const project = response.data;
+
+        // Agora vou adicionar esse projeto novo no final de array de projetos(projects). Lembrar de adicionar o plugin "   " e acrescentar no arquivo babel.config.js o seguinte: 
+        setProjects([...projects, project]);
     } 
 
     return(
