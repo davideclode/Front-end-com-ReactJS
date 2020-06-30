@@ -25,5 +25,6 @@
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
   },
-  "author": "Davide da Silva <silvada1@hotmail.com>"
+  "author": "Davide da Silva <silvada1@hotmail.com>",
+  "repository": "git@github.com:davideclode/Front-end-com-ReactJS.git"
 }
